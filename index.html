@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Top Earning BD</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+:root{
+--p:#ff2f86;
+--p2:#8b5cf6;
+--bg:#fff8fc;
+--card:#fff;
+--text:#191526;
+--muted:#7b7182;
+--line:#f0dfeb;
+--green:#0eaf78
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:linear-gradient(180deg,#fff,#fff5fa 55%,#f6f1ff);
+font-family:Arial,"Noto Sans Bengali",sans-serif;
+color:var(--text)
+}
+
+.app{
+max-width:720px;
+margin:auto;
+min-height:100vh;
+padding-bottom:92px
+}
+
+header{
+position:sticky;
+top:0;
+z-index:5;
+padding:13px 15px 8px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#ffffffea;
+backdrop-filter:blur(15px)
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:9px;
+font-size:20px;
+font-weight:900
+}
+
+.logoIcon{
+width:41px;
+height:41px;
+border-radius:14px;
+background:linear-gradient(135deg,var(--p),var(--p2));
+display:grid;
+place-items:center;
+color:#fff;
+box-shadow:0 9px 25px #ff2f8640
+}
+
+.status{
+font-size:11px;
+color:var(--p);
+background:#fff0f7;
+padding:7px 10px;
+border-radius:99px;
+font-weight:800
+}
+
+.notice{
+margin:7px 14px 13px;
+border:1px solid #ffc7df;
+border-radius:15px;
+background:#fff1f7;
+padding:10px;
+overflow:hidden;
+white-space:nowrap;
+color:#c51d66;
+font-size:12px;
+font-weight:800
+}
+
+.notice span{
+display:inline-block;
+animation:scroll 15s linear infinite
+}
+
+@keyframes scroll{
+from{transform:translateX(100%)}
+to{transform:translateX(-100%)}
+}
+
+.balance{
+margin:0 14px 14px;
+padding:20px;
+border-radius:25px;
+color:#fff;
+background:linear-gradient(135deg,#ff2f86,#7c3aed);
+box-shadow:0 17px 38px #8b5cf630
+}
+
+.small{
+font-size:12px;
+opacity:.85
+}
+
+.amount{
+font-size:34px;
+font-weight:900;
+margin:5px 0 13px
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px
+}
+
+.btn{
+border:0;
+border-radius:13px;
+padding:11px 14px;
+font-weight:900;
+background:#fff;
+color:var(--p)
+}
+
+.feed{
+height:360px;
+margin:0 14px;
+border-radius:25px;
+overflow:hidden;
+position:relative;
+background:linear-gradient(145deg,#1d1029,#7027ad 55%,#ff2f86);
+display:flex;
+align-items:flex-end;
+padding:18px;
+color:#fff
+}
+
+.feed:after{
+content:"▶";
+position:absolute;
+inset:0;
+display:grid;
+place-items:center;
+font-size:55px;
+color:#ffffffcc
+}
+
+.feedText{
+position:relative;
+z-index:2
+}
+
+.feedText b{
+font-size:20px
+}
+
+.feedText small{
+opacity:.85
+}
+
+.section{
+padding:17px 14px 0
+}
+
+.title{
+font-weight:900;
+font-size:18px;
+margin-bottom:10px
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:11px
+}
+
+.card{
+background:#fff;
+border:1px solid var(--line);
+border-radius:19px;
+padding:15px;
+min-height:124px;
+box-shadow:0 8px 25px #5e205e0a
+}
+
+.ic{
+width:43px;
+height:43px;
+border-radius:14px;
+background:#fff0f7;
+display:grid;
+place-items:center;
+font-size:21px;
+margin-bottom:9px
+}
+
+.card b{
+font-size:15px
+}
+
+.card p{
+margin:5px 0 0;
+color:var(--muted);
+font-size:11px;
+line-height:1.5
+}
+
+.activity{
+border:1px solid var(--line);
+background:#fff;
+border-radius:18px;
+overflow:hidden
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+padding:13px;
+border-bottom:1px solid #f4eaf1;
+font-size:13px
+}
+
+.item:last-child{
+border:0
+}
+
+.plus{
+color:var(--green);
+font-weight:900
+}
+
+nav{
+position:fixed;
+z-index:10;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(720px,100%);
+display:grid;
+grid-template-columns:repeat(5,1fr);
+padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+background:#fffffff5;
+backdrop-filter:blur(16px);
+border-top:1px solid var(--line)
+}
+
+nav button{
+border:0;
+background:none;
+color:#807685;
+font-size:10px;
+font-weight:800
+}
+
+nav button.active{
+color:var(--p)
+}
+
+nav i{
+display:block;
+font-style:normal;
+font-size:19px;
+margin-bottom:3px
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+<div class="logo">
+<div class="logoIcon">৳</div>
+Top Earning BD
+</div>
+
+<div class="status" id="status">
+Connecting…
+</div>
+</header>
+
+<div class="notice">
+<span>
+📢 Welcome • Activation ৳90 • Successful Referral ৳30 • Withdraw with bKash/Nagad
+</span>
+</div>
+
+<div class="balance">
+
+<div class="small">
+আপনার Balance
+</div>
+
+<div class="amount" id="balance">
+৳0.00
+</div>
+
+<div class="row">
+
+<span class="small">
+Account: Not Activated
+</span>
+
+<button class="btn" onclick="activate()">
+Activate ৳90
+</button>
+
+</div>
+</div>
+
+<div class="feed">
+
+<div class="feedText">
+
+<b>
+For You
+</b>
+
+<br>
+
+<small>
+ভিডিও দেখুন • অনুমোদিত rewarded ad থেকে earn করুন
+</small>
+
+</div>
+
+</div>
+
+<section class="section">
+
+<div class="title">
+Earn & Rewards
+</div>
+
+<div class="grid">
+
+<div class="card" onclick="activate()">
+
+<div class="ic">
+🔐
+</div>
+
+<b>
+Activation
+</b>
+
+<p>
+৳90 payment দিয়ে account activate করুন
+</p>
+
+</div>
+
+<div class="card" onclick="spin()">
+
+<div class="ic">
+🎡
+</div>
+
+<b>
+Lucky Spin
+</b>
+
+<p>
+Admin নির্ধারিত reward
+</p>
+
+</div>
+
+<div class="card" onclick="refer()">
+
+<div class="ic">
+👥
+</div>
+
+<b>
+Refer & Earn
+</b>
+
+<p>
+সফল referral = ৳30
+</p>
+
+</div>
+
+<div class="card" onclick="ads()">
+
+<div class="ic">
+📺
+</div>
+
+<b>
+Watch Ads
+</b>
+
+<p>
+Policy-compliant rewarded ads
+</p>
+
+</div>
+
+<div class="card" onclick="withdraw()">
+
+<div class="ic">
+💳
+</div>
+
+<b>
+Withdrawal
+</b>
+
+<p>
+bKash / Nagad • valid referral required
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="ic">
+📜
+</div>
+
+<b>
+Earning History
+</b>
+
+<p>
+সব transaction এক জায়গায়
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="ic">
+🎁
+</div>
+
+<b>
+Daily Bonus
+</b>
+
+<p>
+Server-side daily reward
+</p>
+
+</div>
+
+<div class="card" onclick="support()">
+
+<div class="ic">
+✈️
+</div>
+
+<b>
+Telegram Support
+</b>
+
+<p>
+Admin-configured support
+</p>
+
+</div>
+
+</div>
+</section>
+
+<section class="section">
+
+<div class="title">
+Recent Activity
+</div>
+
+<div class="activity">
+
+<div class="item">
+<span>Referral Bonus</span>
+<span class="plus">+ ৳30</span>
+</div>
+
+<div class="item">
+<span>Ad Reward</span>
+<span class="plus">+ ৳0.50</span>
+</div>
+
+<div class="item">
+<span>Lucky Spin</span>
+<span class="plus">+ ৳5</span>
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<nav>
+
+<button class="active">
+<i>⌂</i>
+Home
+</button>
+
+<button onclick="ads()">
+<i>▶</i>
+Earn
+</button>
+
+<button onclick="spin()">
+<i>🎡</i>
+Spin
+</button>
+
+<button onclick="refer()">
+<i>👥</i>
+Refer
+</button>
+
+<button>
+<i>●</i>
+Profile
+</button>
+
+</nav>
+
+<script>
+
+const tg = window.Telegram?.WebApp;
+
+if(tg){
+
+tg.ready();
+
+tg.expand();
+
+document.getElementById("status").textContent="Telegram Ready";
+
+}
+
+function activate(){
+
+alert("Activation ৳90\n\nPayment system backend সংযুক্ত হলে এখানে bKash/Nagad payment ও transaction ID submit করা যাবে।");
+
+}
+
+function spin(){
+
+alert("Lucky Spin\n\nBackend সংযুক্ত হলে server থেকে নিরাপদভাবে Spin reward দেওয়া হবে।");
+
+}
+
+function refer(){
+
+alert("Refer & Earn\n\nSuccessful referral reward: ৳30");
+
+}
+
+function ads(){
+
+alert("Rewarded Ads\n\nApproved ad network সংযুক্ত হলে এখানে rewarded ads চলবে।");
+
+}
+
+function withdraw(){
+
+alert("Withdrawal\n\nbKash / Nagad\nMinimum ৳100\nMaximum ৳5,000\nকমপক্ষে ১টি valid referral প্রয়োজন।");
+
+}
+
+function support(){
+
+alert("Telegram Support\n\nSupport username Admin Panel থেকে সেট করা হবে।");
+
+}
+
+</script>
+
+</body>
+</html>
